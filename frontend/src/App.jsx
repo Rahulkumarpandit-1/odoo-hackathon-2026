@@ -1,25 +1,29 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Users from "./pages/Users";
+import Vehicles from "./pages/Vehicles";
+import Reports from "./pages/Reports";
+import { Navigate } from "react-router-dom";
 
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/" />;
+};
 function App() {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-
-  const handleSubmit = async () => {
-    await fetch("http://localhost:5000/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, message })
-    });
-    alert("Data Sent");
-  };
-
   return (
-    <div>
-      <h1>Hackathon Project</h1>
-      <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
-      <input placeholder="Message" onChange={(e) => setMessage(e.target.value)} />
-      <button onClick={handleSubmit}>Submit</button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/users" element={<Users />} />
+       <Route path="/vehicles" element={<ProtectedRoute><Vehicles /></ProtectedRoute>} />
+        <Route path="/reports" element={<Reports />} />
+        
+      </Routes>
+    </BrowserRouter>
   );
 }
 

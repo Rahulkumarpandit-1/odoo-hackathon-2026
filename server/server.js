@@ -24,6 +24,9 @@ const authRoutes = require("./routes/authRoutes");
 console.log("AuthRoutes:", authRoutes);
 app.use("/api/auth", authRoutes);
 
+const dashboardRoutes = require("./routes/dashboard");
+app.use("/api/dashboard", dashboardRoutes);
+
 const driverRoutes = require("./routes/driverRoutes");
 app.use("/api/drivers", driverRoutes);
 const Data = require("./models/TempData");
