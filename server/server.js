@@ -15,11 +15,21 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 const vehicleRoutes = require("./routes/vehicleRoutes");
-
-
 app.use("/api/vehicles", vehicleRoutes);
+
+const tripRoutes = require("./routes/tripRoutes");
+app.use("/api/trips", tripRoutes);
+
+const authRoutes = require("./routes/authRoutes");
+console.log("AuthRoutes:", authRoutes);
+app.use("/api/auth", authRoutes);
+
+const driverRoutes = require("./routes/driverRoutes");
+app.use("/api/drivers", driverRoutes);
 const Data = require("./models/TempData");
 
+const maintenanceRoutes = require("./routes/maintenanceRoutes");
+app.use("/api/maintenance", maintenanceRoutes);
 app.post("/submit", async (req, res) => {
   try {
     console.log("Incoming data:", req.body);

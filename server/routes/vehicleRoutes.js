@@ -12,7 +12,23 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+router.put("/:id/maintenance", async (req, res) => {
+  try {
+    const vehicle = await Vehicle.findById(req.params.id);
 
+    if (!vehicle) {
+      return res.status(404).json({ error: "Vehicle not found" });
+    }
+
+    vehicle.status = "InShop";
+    await vehicle.save();
+
+    res.json({ message: "Vehicle sent to maintenance" });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 // POST create vehicle
 router.post("/", async (req, res) => {
   try {
